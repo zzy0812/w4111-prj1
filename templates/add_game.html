@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron" style="background-image:url('https://images.unsplash.com/photo-1516731415730-0c607149933a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'); background-repeat: repeat-y; background-size: auto;">
+  <div class="jumbotron" style="background:#7f7f7f;background:rgba(255,255,255,0.65); color:'black'">
+
+    {# get_flashed_messages() is auto sent to the template with the flash() call #}
+    {% for mess in get_flashed_messages()  %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{mess}}
+      </div>
+    {% endfor %}
+
+    <h1>Add information about a game.</h1>
+    <p>Provide information in the form below:</p><br>
+    {% if form.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      Error in input. Please make sure that all inputs are valid.
+      </div>
+    {% endif %}
+
+    <form method="POST">
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+        {{ form.date.label }} {{ form.date() }}<br>
+        {{ form.home_teamname.label }} {{ form.home_teamname() }}<br>
+        {{ form.away_teamname.label }} {{ form.away_teamname() }} <br>
+        {{ form.winner.label }} {{ form.winner() }}
+        {{ form.home_runnumber.label }} {{ form.home_runnumber() }}<br>
+        {{ form.home_errornumber.label }} {{ form.home_errornumber() }}<br>
+        {{ form.home_hitnumber.label }} {{ form.home_hitnumber() }}<br><br>
+        {{ form.away_runnumber.label }} {{ form.away_runnumber() }}<br>
+        {{ form.away_errornumber.label }} {{ form.away_errornumber() }}<br>
+        {{ form.away_hitnumber.label }} {{ form.away_hitnumber() }}<br><br>
+        {{ form.weather.label }} {{ form.weather() }}<br>
+        {{ form.venue.label }} {{ form.venue() }}<br>
+        {{ form.day_or_night.label }} {{ form.day_or_night() }}
+        {{ form.submit() }}
+    </form>
+
+    <br>
+    {% if success %}
+    <h3>Successfully added the game record into our database!</h3>
+    {% endif %}
+
+    {% if already_exist %}
+    <h3>The game record already exists in our database!</h3>
+    {% endif %}
+    <br>
+
+
+
+  </div>
+
+  <div class="jumbotron" style="background:#7f7f7f;background:rgba(255,255,255,0.65); color:'black'">
+    <h2>All games in our database:</h2>
+    <ul>
+      {% for j in games %}
+      <li>Home: <span style="color:#4C0099;font-family:'Alef';"><em>{{j[0]}}</em></span> <span style="color:#FF0000"><b>VS</b></span> Away: <span style="color:#006633;font-family:'Alef';"><em>{{j[1]}}</em></span> <br>
+      {% endfor %}
+    </ul>
+
+  </div>
+
+
+</div>
+{% endblock %}

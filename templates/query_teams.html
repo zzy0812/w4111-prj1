@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron" style="background-image:url('https://images.unsplash.com/photo-1516731415730-0c607149933a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'); background-repeat: repeat-y; background-size: auto;">
+
+  <div class="jumbotron" style="background:#7f7f7f;background:rgba(255,255,255,0.65); color:'black'">
+    <h1>Query information about a team.</h1>
+    <p>Enter the name of the team with the form below:</p>
+    <form method="POST">
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+        {{ form.name.label }} {{ form.name() }}
+        {{ form.submit() }}
+    </form>
+    <br>
+    {% if cannot_find %}
+    <h6>Sorry, cannot find information about this team.</h6>
+    {% endif %}
+    {% if flag_exist %}
+      <h3>Here is the result: </h3> <br>
+      {% for i in team_info %}
+          {% if team_info[i][0]|length > 0 %}
+            <h5>The team <span style="color:#0000FF;font-family:'Alef';"><em>{{i}}</em></span> played following game(s):</h5> <br>
+            <ul>
+              {% for j in team_info[i][0] %}
+              <li>Home: <span style="color:#4C0099;font-family:'Alef';"><em>{{j[0]}}</em></span> <span style="color:#FF0000"><b>VS</b></span> Away: <span style="color:#006633;font-family:'Alef';"><em>{{j[1]}}</em></span></li> <br>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if team_info[i][1]|length > 0 %}
+            <h5>The team <span style="color:#0000FF;font-family:'Alef';"><em>{{i}}</em></span> has following player(s):</h5> <br>
+            <ul>
+              {% for j in team_info[i][1] %}
+              <li>{{j}}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="jumbotron" style="background:#7f7f7f;background:rgba(255,255,255,0.65); color:'black'">
+    <h2>All teams in our database:</h2>
+    <ul>
+      {% for j in team_names %}
+      <li>{{j}}</li>
+      {% endfor %}
+    </ul>
+
+  </div>
+
+
+
+</div>
+{% endblock %}

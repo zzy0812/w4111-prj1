@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron" style="background-image:url('https://images.unsplash.com/photo-1516731415730-0c607149933a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'); background-repeat: repeat-y; background-size: auto;">
+  <div class="jumbotron" style="background:#7f7f7f;background:rgba(255,255,255,0.65); color:'black'">
+    <h1>Add information about a player.</h1>
+    <p>Enter the name of the player and its team with the form below:</p>
+    <form method="POST">
+        {# This hidden_tag is a CSRF security feature. #}
+        {{ form.hidden_tag() }}
+        {{ form.player_name.label }} {{ form.player_name() }}
+        {{ form.team_name.label }} {{ form.team_name() }}
+        {{ form.submit() }}
+    </form>
+    <br>
+    {% if already_exist %}
+    <h3>The player already exists in our database!</h3>
+
+    {% else %}
+      {% if new_team %}
+        <h3>Created a new record for the team and the player! </h3><br>
+      {% endif %}
+      {% if auxiliary_flag %}
+        <h3>Created a new record for the player! The team already exists.</h3><br>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="jumbotron" style="background:#7f7f7f;background:rgba(255,255,255,0.65); color:'black'">
+    <h2>All players in our database:</h2>
+    <ul>
+      {% for j in player_names %}
+      <li>{{j}}</li>
+      {% endfor %}
+    </ul>
+
+  </div>
+
+
+
+
+</div>
+{% endblock %}
