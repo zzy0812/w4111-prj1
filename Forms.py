@@ -34,7 +34,7 @@ class add_game_Form(FlaskForm):
     date = DateField('Date of the game:',validators=[InputRequired()], format='%m/%d/%y',
                           render_kw={'placeholder': 'e.g.12/31/99'})
     home_teamname = StringField('Name of the home team:', validators=[InputRequired(),Length(min=1, max=39)])
-    away_teamname = StringField('Name of the home team:', validators=[InputRequired(),Length(min=1, max=39)])
+    away_teamname = StringField('Name of the away team:', validators=[InputRequired(),Length(min=1, max=39)])
     winner = RadioField(u'Winner:',
                           choices=[('home', 'Home team'),
                                    ('away', 'Away team')], validators=[InputRequired()])
