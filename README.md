@@ -1,5 +1,7 @@
-# To run locally:
+## To run locally:
 
-## python server.py
+```python
+python server.py
+```
 
-# Go to http://localhost:8111 in your browser.
+## Go to http://localhost:8111 in your browser.
